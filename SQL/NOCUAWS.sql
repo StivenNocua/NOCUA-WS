@@ -156,3 +156,7 @@ CREATE TABLE mensajes (
     FOREIGN KEY (id_usuario_destinatario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
+
+CREATE TABLE t (
+	id_t INT AUTO_INCREMENT PRIMARY PRIMARY KEY
+);
