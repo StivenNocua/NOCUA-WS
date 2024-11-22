@@ -1,0 +1,44 @@
+/* Contenedor del checkbox*/
+.form-check {
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    margin-bottom: 1rem; /* Espacio debajo */
+    justify-content: flex-start; /* Alinear contenido al inicio */
+    gap: 10px; /* Espacio entre checkbox y texto */
+}
+
+/* Checkbox */
+.form-check-input {
+    margin-right: 0.5rem; /* Espacio entre checkbox y texto */
+    width: 16px; /* Ajustar tamaño del checkbox */
+    height: 16px;
+}
+
+/* Etiqueta */
+.form-check-label {
+    font-size: 1rem; /* Ajustar el tamaño de fuente */
+    color: #333; /* Color de texto */
+    margin: 0; /* Eliminar márgenes */
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espacio entre texto y enlace */
+}
+
+/* Enlace de Términos y Condiciones */
+.form-check-label a {
+    color: #007bff; /* Color azul para el enlace */
+    text-decoration: none; /* Sin subrayado */
+    font-weight: bold; /* Resaltar enlace */
+}
+
+.form-check-label a:hover {
+    text-decoration: underline; /* Subrayar el enlace al pasar el mouse */
+}
+
+/* Ajuste del contenedor en pantallas pequeñas */
+@media (max-width: 576px) {
+    .form-check {
+        flex-direction: column; /* Alinear el contenido en columna en pantallas pequeñas */
+        align-items: flex-start; /* Alinear al inicio en pantallas pequeñas */
+    }
+}

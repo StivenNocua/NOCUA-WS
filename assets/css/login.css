@@ -1,0 +1,384 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    background-image: url(../img/logo_NOCUA_WS.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+main{
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.contenedor__todo{
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    position: relative;
+}
+
+.caja__trasera{
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 128, 255, 0.5);
+
+}
+
+.caja__trasera div{
+    margin: 100px 40px;
+    color: white;
+    transition: all 500ms;
+}
+
+
+.caja__trasera div p,
+.caja__trasera button{
+    margin-top: 30px;
+}
+
+.caja__trasera div h3{
+    font-weight: 400;
+    font-size: 26px;
+}
+
+.caja__trasera div p{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.caja__trasera button{
+    padding: 10px 40px;
+    border: 2px solid #fff;
+    font-size: 14px;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    outline: none;
+    transition: all 300ms;
+}
+
+.caja__trasera button:hover{
+    background: #fff;
+    color: #46A2FD;
+}
+
+/*Formularios*/
+
+.contenedor__login-register{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    top: -185px;
+    left: 10px;
+
+    /*La transicion va despues del codigo JS*/
+    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+.contenedor__login-register form{
+    width: 100%;
+    padding: 80px 20px;
+    background: white;
+    position: absolute;
+    border-radius: 20px;
+}
+
+.contenedor__login-register form h2{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #46A2FD;
+}
+
+.contenedor__login-register form input{
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background: #F2F2F2;
+    font-size: 16px;
+    outline: none;
+}
+
+.contenedor__login-register form button{
+    padding: 10px 40px;
+    margin-top: 40px;
+    border: none;
+    font-size: 14px;
+    background: #46A2FD;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    outline: none;
+}
+
+.formulario__login{
+    opacity: 1;
+    display: block;
+}
+.formulario__register{
+    display: none;
+}
+
+@media screen and (max-width: 850px){
+
+    main{
+        margin-top: 50px;
+    }
+
+    .caja__trasera{
+        max-width: 350px;
+        height: 300px;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .caja__trasera div{
+        margin: 0px;
+        position: absolute;
+    }
+
+
+    /*Formularios*/
+
+    .contenedor__login-register{
+        top: -10px;
+        left: -5px;
+        margin: auto;
+    }
+
+    .contenedor__login-register form{
+        position: relative;
+    }
+}
+
+.ojitos {
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    text-align: center;
+}
+
+.atras {
+    width: 20px;
+    height: 20px;
+}
+
+input {
+  background: white;  
+  background: linear-gradient(lightgray, white);  
+  border: 2px solid lightgray;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0 2px 0 white;
+  color: black;
+  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 5;
+  padding: 0 10px;
+  text-shadow: 0 -1px 0 black;
+}
+
+input {
+  line-height: 30px;
+
+}
+
+input::-webkit-input-placeholder {
+   color: black;
+}
+
+input:-moz-placeholder {
+   color: white;
+}
+
+input:focus {
+  -webkit-animation: glow 800ms ease-out infinite alternate;
+  -moz-animation: glow 800ms ease-out infinite alternate;
+  -o-animation: glow 800ms ease-out infinite alternate;
+  -ms-animation: glow 800ms ease-out infinite alternate;
+  animation: glow 800ms ease-out infinite alternate;
+  background: white;
+  background: linear-gradient(lightgray, white);
+  border-color: white;
+  box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 black;
+  color: black;
+  outline: none;
+}
+
+input:focus::-webkit-input-placeholder { 
+  color: black;
+}
+
+input:focus:-moz-placeholder {
+  color: white;
+}
+
+select {
+  background: white;  
+  background: linear-gradient(lightgray, white);  
+  border: 2px solid lightgray;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0 2px 0 white;
+  color: black;
+  font-family: 'Cabin', helvetica, arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 5;
+  padding: 0 10px;
+  text-shadow: 0 -1px 0 black;
+}
+
+select {
+  line-height: 30px;
+
+}
+
+select::-webkit-input-placeholder {
+   color: black;
+}
+
+select:-moz-placeholder {
+   color: black;
+}
+
+select:focus {
+  -webkit-animation: glow 800ms ease-out infinite alternate;
+  -moz-animation: glow 800ms ease-out infinite alternate;
+  -o-animation: glow 800ms ease-out infinite alternate;
+  -ms-animation: glow 800ms ease-out infinite alternate;
+  animation: glow 800ms ease-out infinite alternate;
+  background: black;
+  background: linear-gradient(lightgray, white);
+  border-color: white;
+  box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 black;
+  color: black;
+  outline: none;
+}
+
+select:focus::-webkit-input-placeholder { 
+  color: black;
+}
+
+select:focus:-moz-placeholder {
+  color: white;
+}
+
+
+@keyframes glow {
+    0% {
+    border-color: black;
+    box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 #000;
+    } 
+    100% {
+    border-color: lightgray;
+    box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 10px rgba(0,255,0,.4), 0 2px 0 #000;
+    }
+}
+
+input::placeholder{
+    color: blue;
+    text-align: center;
+}
+
+h4{
+    text-align: center;
+    color: blue;
+    letter-spacing: inherit;
+}
+
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 450px;
+  width: 800px;
+  box-shadow: 0px 5px 8px rgba(0,0,0,.3);
+  overflow: hidden;
+}
+.images{
+  height: 100%;
+  width: 500%;
+  display: flex;
+}
+.images img{
+  width: 100%;
+  height: 100%;
+}
+.images .slide{
+  width: 20%;
+  transition: .6s;
+}
+.buttons{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.buttons a{
+  height: 8px;
+  width: 30px;
+  border: 2px solid white;
+  margin: 0 5px;
+  border-radius: 10px;
+}
+a.active{
+  transition: .5s;
+  transform: scale(0.999);
+  background: white;
+  animation: animate .4s;
+}
+@keyframes animate {
+  100%{
+    transform: scale(0.8);
+  }
+}
+
+.form-check-input {
+    width: 1.2em;  /* Tamaño estándar */
+    height: 1.2em;
+    cursor: pointer;
+    accent-color: #007bff; /* Color azul */
+    border-radius: 0.25em;
+    display: inline-block; /* Evita que se expanda */
+    margin-right: 5px; /* Espacio entre el checkbox y el texto */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.form-check-label {
+    margin-left: 0; /* Remover margen adicional */
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.terms-link {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.terms-link:hover {
+    text-decoration: none;
+    color: #0056b3;
+}

@@ -1,0 +1,94 @@
+/* Navbar general styling */
+.navbar {
+  background-color: #333; /* Color de fondo de la barra de navegación */
+  border: none;
+  border-radius: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos del logo */
+.navbar-brand h1 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.navbar-brand img.menulogo {
+  width: 40px; /* Tamaño del logo */
+  margin-right: 5px;
+}
+
+/* Estilo del botón toggle para dispositivos móviles */
+.navbar-toggle {
+  border-color: transparent;
+  background-color: #555;
+}
+
+.navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+/* Links de la navegación */
+.navbar-nav > li > a {
+  color: #ffffff;
+  font-size: 16px;
+  padding: 15px 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav > li > a:hover,
+.navbar-nav > li.active > a {
+  color: #00bcd4; /* Color al pasar el cursor o elemento activo */
+}
+
+/* Dropdown menu */
+.navbar-nav .dropdown-menu {
+  background-color: #444;
+  border: none;
+}
+
+.navbar-nav .dropdown-menu > li > a {
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.navbar-nav .dropdown-menu > li > a:hover {
+  background-color: #555; /* Color de fondo al pasar el cursor */
+}
+
+/* Redes sociales */
+.redes-sociales {
+  width: 20px; /* Tamaño de iconos de redes sociales */
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.dropdown-toggle::after {
+  color: #ffffff; /* Flecha del dropdown */
+}
+
+/* Estilos del botón de "Ingresar" */
+.navbar-nav > li > a.page-scroll[href="view/login.php"] {
+  background-color: #00bcd4;
+  color: #ffffff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-nav > li > a.page-scroll[href="view/login.php"]:hover {
+  background-color: #008c9e;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+  .navbar-nav > li > a {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+  
+  .navbar-brand h1 {
+    font-size: 20px;
+  }
+}
