@@ -1,425 +1,106 @@
-// Función para finalizar sesión
-function finalizarSesion() {
-    sessionStorage.clear(); // Limpiar sesión
-    window.location.href = "../login.php"; // Redirigir a la página de login
-}
-
-// Verificar si el usuario ha iniciado sesión
-if (!sessionStorage.getItem('usuario')) {
-    alert("DEBES INICIAR SESIÓN");
-    finalizarSesion();
-}
-
-// Obtener el ID de usuario desde la sesión
-const id_usuario = sessionStorage.getItem('usuario');
-
-// Validar si el ID de usuario es un correo válido
-if (!validateEmail(id_usuario)) {
-    alert("Correo inválido.");
-    finalizarSesion();
-}
-
-// Función para validar correo electrónico
-function validateEmail(email) {
-    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(String(email).toLowerCase());
-}
-
-// Obtener los datos del usuario desde el servidor
-fetch('../../model/conect.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email: id_usuario }) // Enviar email para obtener los datos del usuario
-})
-.then(response => response.json())
-.then(data => {
-    if (data.success) {
-        // Asignar los valores a las variables
-        const { id_usuario, apellido, nombre, usuario, email, cargo, foto } = data;
-
-        // Establecer una imagen predeterminada si no hay foto
-        let userPhoto = foto ? '../../' + foto : '../../../assets/img/usuario.png';
-
-        // Aquí puedes usar los valores para actualizar el HTML de la página
-        document.getElementById('nombre').innerText = nombre;
-        document.getElementById('apellido').innerText = apellido;
-        document.getElementById('usuario').innerText = usuario;
-        document.getElementById('email').innerText = email;
-        document.getElementById('cargo').innerText = cargo;
-        document.getElementById('fotoPerfil').src = userPhoto;
-
-    } else {
-        alert("No se encontró información para este usuario.");
-        finalizarSesion();
-    }
-})
-.catch(error => {
-    console.error('Error al obtener los datos del usuario:', error);
-    alert("Ocurrió un error al obtener los datos.");
-    finalizarSesion();
-});
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>ACTUALIZAR USUARI@ <?php echo htmlspecialchars($usuario); ?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Usuario</title>
 
-	<!-- Normalize V8.0.1 -->
-	<link rel="stylesheet" href="../assets/css/normalize.css">
-
-	<!-- Bootstrap V4.3 -->
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
-	<!-- Bootstrap Material Design V4.0 -->
-	<link rel="stylesheet" href="../assets/css/bootstrap-material-design.min.css">
-
-	<!-- Font Awesome V5.9.0 -->
-	<link rel="stylesheet" href="../assets/css/all.css">
-
-	<!-- Sweet Alerts V8.13.0 CSS file -->
-	<link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
-
-	<!-- Sweet Alert V8.13.0 JS file-->
-	<script src="./js/sweetalert2.min.js" ></script>
-
-	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<link rel="stylesheet" href="../assets/css/jquery.mCustomScrollbar.css">
-	
-	<!-- General Styles -->
-	<link rel="stylesheet" href="../assets/css/style.css">
-
-
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-	
-	<!-- Main container -->
-	<main class="full-box main-container">
-		<!-- Nav lateral -->
-		<section class="full-box nav-lateral">
-			<div class="full-box nav-lateral-bg show-nav-lateral"></div>
-			<div class="full-box nav-lateral-content">
-				<figure class="full-box nav-lateral-avatar">
-					<i class="far fa-times-circle show-nav-lateral"></i>
-					<img class="app-sidebar__user-avatar" src="<?php echo htmlspecialchars($foto); ?>" alt="Avatar">
-					<figcaption class="roboto-medium text-center"><?php echo htmlspecialchars($apellido) . " " . htmlspecialchars($nombre); ?><br><small class="roboto-condensed-light">Web Developer</small>
-					</figcaption>
-				</figure>
-				<div class="full-box nav-lateral-bar"></div>
-				<nav class="full-box nav-lateral-menu">
-					<ul>
-						<li>
-							<a href="home.html"><i class="fab fa-dashcube fa-fw"></i> &nbsp; Dashboard</a>
-						</li>
+    <main class="container mt-5">
+        <h3 class="text-center">Actualizar Usuario</h3>
+        <form id="update-user-form" class="mt-4" autocomplete="off">
+            <div class="form-floating mb-3">
+                <input type="text" id="last-name" class="form-control" placeholder="Apellido" value="Doe">
+                <label for="last-name">Apellido</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" id="first-name" class="form-control" placeholder="Nombre" value="John">
+                <label for="first-name">Nombre</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" id="username" class="form-control" placeholder="Usuario" value="johndoe">
+                <label for="username">Usuario</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" id="email" class="form-control" placeholder="Email" value="johndoe@example.com">
+                <label for="email">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="password" class="form-control" placeholder="Nueva contraseña">
+                <label for="password">Nueva contraseña</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="confirm-password" class="form-control" placeholder="Confirmar contraseña">
+                <label for="confirm-password">Confirmar contraseña</label>
+            </div>
+            <div id="password-error" class="text-danger" style="display: none;">Las contraseñas no coinciden.</div>
+            <div class="form-floating mb-3">
+                <input type="file" id="upload-photo" class="form-control" accept="image/*" onchange="previewImage(event)">
+                <label for="upload-photo">Subir Foto</label>
+            </div>
+            <img id="preview" src="" alt="Vista previa de la imagen" style="max-width: 100%; height: auto; display: none;" />
 
-						<li>
-							<a href="#" class="nav-btn-submenu"><i class="fas fa-users fa-fw"></i> &nbsp; Clientes <i class="fas fa-chevron-down"></i></a>
-							<ul>
-								<li>
-									<a href="client-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar Cliente</a>
-								</li>
-								<li>
-									<a href="client-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de clientes</a>
-								</li>
-								<li>
-									<a href="client-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar cliente</a>
-								</li>
-							</ul>
-						</li>
+            <div class="text-center mt-4">
+                <button type="reset" class="btn btn-secondary">Restablecer</button>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </div>
+        </form>
+    </main>
 
-						<li>
-							<a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Items <i class="fas fa-chevron-down"></i></a>
-							<ul>
-								<li>
-									<a href="item-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a>
-								</li>
-								<li>
-									<a href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a>
-								</li>
-								<li>
-									<a href="item-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a>
-								</li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-btn-submenu"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Préstamos <i class="fas fa-chevron-down"></i></a>
-							<ul>
-								<li>
-									<a href="reservation-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo préstamo</a>
-								</li>
-								<li>
-									<a href="reservation-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de préstamos</a>
-								</li>
-								<li>
-									<a href="reservation-search.html"><i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar préstamos</a>
-								</li>
-								<li>
-									<a href="reservation-pending.html"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Préstamos pendientes</a>
-								</li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-btn-submenu"><i class="fas  fa-user-secret fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
-							<ul>
-								<li>
-									<a href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
-								</li>
-								<li>
-									<a href="user-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de usuarios</a>
-								</li>
-								<li>
-									<a href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
-								</li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="company.html"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</section>
-
-		<!-- Page content -->
-		<section class="full-box page-content">
-			<nav class="full-box navbar-info">
-				<a href="#" class="float-left show-nav-lateral">
-					<i class="fas fa-exchange-alt"></i>
-				</a>
-				<a href="user-update.html">
-					<i class="fas fa-user-cog"></i>
-				</a>
-				<a href="#" class="btn-exit-system">
-					<i class="fas fa-power-off"></i>
-				</a>
-			</nav>
-
-			<!-- Page header -->
-			<div class="full-box page-header">
-				<h3 class="text-left">
-					<i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR USUARIO
-				</h3>
-				<p class="text-justify">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem odit amet asperiores quis minus, dolorem repellendus optio doloremque error a omnis soluta quae magnam dignissimos, ipsam, temporibus sequi, commodi accusantium!
-				</p>
-			</div>
-
-			<div class="container-fluid">
-				<ul class="full-box list-unstyled page-nav-tabs">
-					<li>
-						<a href="client-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR CLIENTE</a>
-					</li>
-					<li>
-						<a href="client-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE CLIENTES</a>
-					</li>
-					<li>
-						<a href="client-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CLIENTE</a>
-					</li>
-				</ul>	
-			</div>
-			
-			<!-- Content here-->
-			<div class="container-fluid">
-				<form action="../../../controller/update/update_user_admin.php" class="form-neon" autocomplete="off">
-					<fieldset>
-						<legend><i class="fas fa-user"></i> &nbsp; Datos de Usuario:</legend>
-						<div class="container-fluid">
-							<div class="row">
-								                    <input type="hidden" name="id_usuario" value="<?php echo isset($valores['id_usuario']) ? $valores['id_usuario'] : ''; ?>" required="">
-                <div class="form-floating mb-3">
-                    <input type="text" name="apellido" class="form-control" id="registerApellido" readonly value="<?php echo $valores['apellido'] ?>" onkeyup="registerUsuario()" placeholder=" " required>
-                    <label for="registerApellido">Apellido</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" name="nombre" class="form-control" id="registerNombre" readonly value="<?php echo $valores['nombre'] ?>" onkeyup="registerUsuario()" placeholder=" " required>
-                    <label for="registerNombre">Nombre</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input readonly type="text" name="usuario" class="form-control" id="usuario" readonly value="<?php echo $valores['usuario'] ?>"  placeholder=" " required>
-                    <label for="usuario">Usuario</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" name="email" class="form-control" id="registerEmail" value="<?php echo $valores['email'] ?>" placeholder=" " required>
-                    <label for="registerEmail">Email</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" id="registerPassword" name="password" class="form-control" placeholder=" " required>
-                    <label for="registerPassword">Contraseña</label>
-                    <center>
-                        <img class="ojitos" id="boton1" src="../../../assets/img/ojo.png" alt="Ver contraseña">
-                    </center>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" id="confirmPassword" name="confirm_password" class="form-control" placeholder=" " required>
-                    <label for="confirmPassword">Confirmar Contraseña</label>
-                    <center>
-                        <img class="ojitos" id="boton2" src="../../../assets/img/ojo.png" alt="Ver contraseña">
-                    </center>
-                </div>
-                <div id="passwordError" style="color:red; display:none;">
-                    Las contraseñas no coinciden.
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="file" name="foto" class="form-control" id="uploadFoto" accept="image/*" onchange="previewImage(event)">
-                    <label for="uploadFoto">Subir Foto</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <img id="preview" src="" alt="Vista previa de la imagen" style="max-width: 100%; height: auto; display: none;" />
-                </div>
-					        </div>
-				        </div>
-			</div>
-					</fieldset>
-					<br><br><br>
-					<p class="text-center" style="margin-top: 40px;">
-						<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
-						&nbsp; &nbsp;
-						<button onclick="return ConfirmActualizar()" type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
-					</p>
-				</form>
-<!-- JavaScript -->
-    <script type="text/javascript">
-    // Función para mostrar la vista previa de la imagen
-    function previewImage(event) {
-        var preview = document.getElementById('preview');
-        var file = event.target.files[0];
-
-        // Si hay un archivo seleccionado
-        if (file) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                preview.src = e.target.result; // Establecer la URL de la imagen
-                preview.style.display = 'block'; // Mostrar la imagen
+    <script>
+        // Mostrar vista previa de la imagen
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
             }
-
-            reader.readAsDataURL(file); // Leer la imagen como un URL de datos
-        } else {
-            preview.src = ''; // Limpiar la vista previa si no hay archivo
-            preview.style.display = 'none'; // Ocultar la imagen
         }
-    }
+
+        // Validar y guardar datos del usuario
+        document.getElementById('update-user-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const lastName = document.getElementById('last-name').value;
+            const firstName = document.getElementById('first-name').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const passwordError = document.getElementById('password-error');
+
+            // Validar contraseñas
+            if (password !== confirmPassword) {
+                passwordError.style.display = 'block';
+                return;
+            }
+            passwordError.style.display = 'none';
+
+            // Simular guardado de datos
+            const updatedUser = {
+                lastName,
+                firstName,
+                username,
+                email,
+                password: password || "No actualizada", // Si no se cambia la contraseña
+            };
+
+            console.log('Datos actualizados:', updatedUser);
+            alert('Datos actualizados con éxito.');
+        });
     </script>
-    <script type="text/javascript">
-    // Función para validar que las contraseñas coincidan
-    function validatePasswords() {
-        const password = document.getElementById('registerPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const errorDiv = document.getElementById('passwordError');
-
-        if (password !== confirmPassword) {
-            errorDiv.style.display = 'block'; // Muestra el mensaje de error
-            return false; // Previene el envío del formulario
-        } else {
-            errorDiv.style.display = 'none'; // Oculta el mensaje de error
-            return true; // Permite el envío del formulario
-        }
-    }
-
-    // Función para mostrar/ocultar contraseñas
-    function togglePasswordVisibility(inputId) {
-        const passwordField = document.getElementById(inputId);
-        if (passwordField.type === "password") {
-            passwordField.type = "text"; // Muestra la contraseña
-        } else {
-            passwordField.type = "password"; // Oculta la contraseña
-        }
-    }
-    </script>
-                  <form method="post" action="../../../controller/delete/delete_user_admin.php">
-                <label>DESEAS ELIMINAR EL USUARIO:</label>
-                <input type="hidden" min="0" name="id" placeholder="Id Usuario" value="<?php echo isset($valores['id_usuario']) ? $valores['id_usuario'] : ''; ?>" required="">
-                <input type="submit" class="eliminar" name="eliminar" value="eliminar" onclick="return ConfirmEliminar()">
-            </form>
-<script class="ventana" type="text/javascript">
-    function ConfirmActualizar(){
-        var respuesta = confirm("!OJO AL ACTUALIZAR SE CIERRA LA SESION Y TIENES QUE VOLVER A INGRESAR! ¿Estas seguro de Actualizar?");
-        if (respuesta == true){
-            return true;
-        } else {
-            return false;
-        }
-    }
-        </script>
-        <script class="ventana" type="text/javascript">
-    function ConfirmEliminar(){
-        var respuesta = confirm("¿OJO VAS A ELIMINAR EL USUARIO ESTAS SEGURO?");
-        if (respuesta == true){
-            return true;
-        } else {
-            return false;
-        }
-    }
-</script>
-			</div>	
-
-		</section>
-	</main>
-	
-	
-	<!--=============================================
-	=            Include JavaScript files           =
-	==============================================-->
-	<!-- jQuery V3.4.1 -->
-	<script src="../assets/js/jquery-3.4.1.min.js" ></script>
-
-	<!-- popper -->
-	<script src="../assets/js/popper.min.js" ></script>
-
-	<!-- Bootstrap V4.3 -->
-	<script src="../assets/js/bootstrap.min.js" ></script>
-
-	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<script src="../assets/js/jquery.mCustomScrollbar.concat.min.js" ></script>
-
-	<!-- Bootstrap Material Design V4.0 -->
-	<script src="../assets/js/bootstrap-material-design.min.js" ></script>
-	<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-
-	<script src="../assets/js/main.js" ></script>
 </body>
 </html>
-<script type="text/javascript">
-  // Selecciona los elementos de cada campo de contraseña y sus respectivos botones
-var boton1 = document.getElementById('boton1');
-var boton2 = document.getElementById('boton2');
-var input1 = document.getElementById('registerPassword');
-var input2 = document.getElementById('confirmPassword');
 
-// Añade un evento de clic para mostrar/ocultar contraseña del primer campo
-boton1.addEventListener('click', function() {
-  mostrarContraseña(input1, boton1);
-});
-
-// Añade un evento de clic para mostrar/ocultar contraseña del segundo campo
-boton2.addEventListener('click', function() {
-  mostrarContraseña(input2, boton2);
-});
-
-// Función para mostrar/ocultar contraseña
-function mostrarContraseña(input, boton) {
-  if (input.type == "password") {
-    input.type = "text";
-    boton.src = "../../../assets/img/invisible.png"; // Cambia el icono a "invisible"
-    
-    // Oculta la contraseña después de 4 segundos
-    setTimeout(function() {
-      ocultar(input, boton);
-    }, 4000);
-  } else {
-    input.type = "password";
-    boton.src = "../../../assets/img/ojo.png"; // Cambia el icono a "ojo"
-  }
-}
-
-// Función para ocultar la contraseña
-function ocultar(input, boton) {
-  input.type = "password";
-  boton.src = "../../../assets/img/ojo.png"; // Vuelve el icono a "ojo"
-}
-</script>
