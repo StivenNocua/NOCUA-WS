@@ -35,7 +35,7 @@
         <!--Formulario de Login y registro-->
         <div class="contenedor__login-register">
             <!--Login-->
-            <form id="formLogin" class="formulario__login">
+            <form id="formLogin" method="POST" class="formulario__login">
                 <a href="../index.html"><img class="atras" src="../assets/img/flecha-hacia-atras.png" alt="Atrás"></a>
                 <h2>Iniciar Sesión</h2>
                 <div class="form-floating mb-3">
@@ -54,7 +54,7 @@
             </form>
 
             <!--Register-->
-            <form id="formRegister" class="formulario__register">
+            <form id="formRegister" method="POST" class="formulario__register">
                 <a href="../index.html"><img class="atras" src="../assets/img/flecha-hacia-atras.png" alt="Atrás"></a>
                 <h2>Registrarse</h2>
                 <div class="form-floating mb-3">
@@ -100,6 +100,7 @@
                 </div>
                 <center><button type="submit" name="register" onclick="return ConfirmRegister()" class="btn btn-success">Registrarse</button></center>
             </form>
+            <script src="../controller/login.js"></script>
         </div>
     </div>
 </main>
